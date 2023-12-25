@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Welcome 메시지 -->
+    <TextView
+        android:id="@+id/txtWelcomeMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hearo에 오신걸 환영합니다"
+        android:textSize="22sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
+
+    <!-- 안내 문구 -->
+    <TextView
+        android:id="@+id/txtGuideMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hearo를 통해, 다양한 사람들과 다양한 방법으로 대화해보세요."
+        android:textSize="14sp"
+        android:layout_below="@id/txtWelcomeMessage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"/>
+
+    <EditText
+        android:id="@+id/edtRegisterNickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="닉네임"
+        android:inputType="textPersonName"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/edtRegisterEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="이메일"
+        android:inputType="textEmailAddress"
+        android:layout_below="@id/edtRegisterNickname"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/edtRegisterPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="회원 비밀번호"
+        android:inputType="textPassword"
+        android:layout_below="@id/edtRegisterEmail"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/edtConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="회원비밀번호 확인"
+        android:inputType="textPassword"
+        android:layout_below="@id/edtRegisterPassword"
+        android:layout_marginTop="16dp"/>
+
+    <CheckBox
+        android:id="@+id/chkAgreePrivacyPolicy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtConfirmPassword"
+        android:layout_marginTop="16dp"
+        android:text="개인정보 취급 방침에 동의합니다." />
+
+    <CheckBox
+        android:id="@+id/chkAgreeTermsConditions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/chkAgreePrivacyPolicy"
+        android:layout_marginTop="8dp"
+        android:text="이용약관에 동의합니다." />
+
+    <Button
+        android:id="@+id/btnCompleteSignup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/chkAgreeTermsConditions"
+        android:layout_marginTop="24dp"
+        android:text="회원가입 완료" />
+</RelativeLayout>
