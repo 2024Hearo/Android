@@ -3,15 +3,19 @@ package com.hearos.hearo
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -25,6 +29,9 @@ class LoginActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         setContentView(R.layout.activity_login)
+
+        // 로그인 세션 초기화
+        FirebaseAuth.getInstance().signOut()
 
         // GoogleSignInOptions 구성
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -47,14 +54,15 @@ class LoginActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        // Google 로그인 인텐트의 결과 처리
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
-                // 로그인 실패 처리
+                // Google 로그인 실패 처리
+                Log.w("LoginActivity", "Google sign-in failed", e)
+                Toast.makeText(this, "Google 로그인 실패: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -66,17 +74,16 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // 로그인 성공
                     Log.d("LoginActivity", "Firebase Auth successful")
-
-                    // 메인 액티비티로 이동하는 코드 (이미 있을 경우 생략)
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    finish() // 로그인 액티비티 종료
+                    // ...
                 } else {
-                    // 로그인 실패
+                    // Firebase 인증 실패
                     Log.w("LoginActivity", "Firebase Auth failed", task.exception)
+                    Toast.makeText(this, "Firebase 인증 실패: ${task.exception?.localizedMessage}", Toast.LENGTH_SHORT).show()
                 }
             }
     }
+
+
 
 }
 
