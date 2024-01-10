@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="16dp">
+    <ImageView
+        android:id="@+id/iv_chatlist_profile"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:src="@drawable/shape_circle_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp" />
+    <TextView
+        android:id="@+id/tv_chatlist_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="닉네임"
+        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="@+id/iv_chatlist_profile"
+        app:layout_constraintStart_toEndOf="@+id/iv_chatlist_profile"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="6dp"/>
+    <TextView
+        android:id="@+id/tv_chatlist_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="채팅 내용"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_chatlist_title"
+        app:layout_constraintBottom_toBottomOf="@id/iv_chatlist_profile"
+        app:layout_constraintStart_toStartOf="@+id/tv_chatlist_title"
+        android:layout_marginTop="4dp"/>
+    <TextView
+        android:id="@+id/tv_chatlist_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12:00"
+        android:textSize="12sp"
+        android:textColor="@color/gray3"
+        app:layout_constraintTop_toTopOf="@id/tv_chatlist_title"
+        app:layout_constraintBottom_toBottomOf="@id/tv_chatlist_title"
+        app:layout_constraintEnd_toEndOf="parent" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray2"
+        app:layout_constraintTop_toBottomOf="@+id/iv_chatlist_profile"
+        android:layout_marginTop="16dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
