@@ -38,7 +38,6 @@ android {
 
 dependencies {
 
-//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'
@@ -58,6 +57,7 @@ dependencies {
     // Firebase와 Google 로그인 의존성 추가
     implementation 'com.google.firebase:firebase-auth:21.0.1' // Firebase Auth
     implementation 'com.google.android.gms:play-services-auth:20.0.0' // Google Sign-In
+    implementation 'com.google.firebase:firebase-firestore:24.1.1'
 
 }
 

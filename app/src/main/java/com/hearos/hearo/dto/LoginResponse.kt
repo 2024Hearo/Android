@@ -1,0 +1,14 @@
+package com.hearos.hearo.dto
+
+import com.google.gson.annotations.SerializedName
+
+data class LoginResponse(
+    @SerializedName("userId")
+    val userId : Long,
+
+    @SerializedName("accessToken")
+    val accessToken : String,
+
+    @SerializedName("refreshToken")
+    val refreshToken : String
+)

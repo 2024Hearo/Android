@@ -1,6 +1,7 @@
 package com.hearos.hearo.utils
 
 import com.hearos.hearo.api.ChatInterface
+import com.hearos.hearo.api.LoginInterface
 import com.hearos.hearo.utils.ApiRepository.Companion.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,6 +19,7 @@ class RetrofitService {
         }
 
         val chatApi = retrofit.create<ChatInterface>(ChatInterface::class.java)
+        val loginApi = retrofit.create<LoginInterface>(LoginInterface::class.java)
     }
 }
 
