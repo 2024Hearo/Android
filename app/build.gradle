@@ -45,6 +45,10 @@ dependencies {
     // Firebase와 Google 로그인 의존성 추가
     implementation 'com.google.firebase:firebase-auth:21.0.1' // Firebase Auth
     implementation 'com.google.android.gms:play-services-auth:20.0.0' // Google Sign-In
+
+
+    implementation 'com.google.firebase:firebase-firestore:24.1.1'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

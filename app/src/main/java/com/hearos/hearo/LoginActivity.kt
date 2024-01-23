@@ -15,7 +15,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginActivity : AppCompatActivity() {
 
@@ -92,8 +94,11 @@ class LoginActivity : AppCompatActivity() {
                     // 로그인 성공 - 메인 액티비티로 이동
                     Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                     val user = FirebaseAuth.getInstance().currentUser
-                    val email = user?.email ?: ""
-                    navigateToMainActivity(idToken, email)
+                    if (user != null) {
+                        // Firestore에 사용자 데이터 저장
+                        saveUserToFirestore(user)
+                    }
+                    navigateToMainActivity(idToken, user?.email ?: "")
                 } else {
                     // Firebase 인증 실패
                     Toast.makeText(this, "Firebase 인증 실패: ${task.exception?.localizedMessage}", Toast.LENGTH_SHORT).show()
@@ -108,5 +113,24 @@ class LoginActivity : AppCompatActivity() {
         }
         startActivity(intent)
         finish()
+    }
+
+    private fun saveUserToFirestore(user: FirebaseUser) {
+        val db = FirebaseFirestore.getInstance()
+        val userProfile = hashMapOf(
+            "uid" to user.uid,
+            "email" to user.email,
+            "name" to user.displayName
+            // 기타 필요한 사용자 정보
+        )
+
+        db.collection("users").document(user.uid)
+            .set(userProfile)
+            .addOnSuccessListener {
+                Log.d("LoginActivity", "Firestore에 사용자 정보 저장 성공")
+            }
+            .addOnFailureListener { e ->
+                Log.d("LoginActivity", "Firestore에 사용자 정보 저장 실패", e)
+            }
     }
 }

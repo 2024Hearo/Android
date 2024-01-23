@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="16dp">
+
+    <!-- Image View at the top -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mypage_bgd"/>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_user_prifile_shape"
+            android:padding="2dp"
+            android:src="@drawable/ic_user_profile_image" /> <!-- 원형 프로필 이미지 -->
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="180dp">
+
+        <!-- SOUND Title -->
+        <TextView
+            android:id="@+id/soundTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SOUND"
+            android:textStyle="bold"/>
+
+        <!-- Three white boxes under SOUND -->
+        <LinearLayout
+            android:id="@+id/soundBoxes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <!-- Individual Boxes -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="#FFFFFF"
+                android:elevation="12dp"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="#FFFFFF"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="#FFFFFF" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <!-- MY VOICE Section -->
+    <TextView
+        android:id="@+id/myVoiceTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MY VOICE"
+        android:textStyle="bold"
+        android:layout_marginTop="300dp" />
+
+    <!-- Long white box under MY VOICE -->
+    <TextView
+        android:id="@+id/voiceBox"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:minHeight="100dp"
+        android:background="#FFFFFF"
+        android:text="Please register your voice"
+        android:textColor="#808080"
+        android:gravity="center"
+        android:layout_below="@id/myVoiceTitle"
+        android:layout_marginTop="10dp"/>
+
+
+    <!-- Setting Section -->
+    <TextView
+        android:id="@+id/settingTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Setting"
+        android:layout_below="@id/voiceBox"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp" />
+
+    <!-- Settings List under Setting -->
+    <LinearLayout
+        android:id="@+id/settingsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        android:layout_below="@id/settingTitle"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알림 설정" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="1:1문의" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="이용 약관" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="서비스 가이드" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="로그아웃" />
+    </LinearLayout>
+
+</RelativeLayout>
