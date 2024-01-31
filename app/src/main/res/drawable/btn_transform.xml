@@ -5,8 +5,8 @@
             android:tint="@color/main"/>
     </item>
     <item
-        android:width="wrap_content"
-        android:height="wrap_content"
+        android:width="14dp"
+        android:height="14dp"
         android:gravity="center"
         android:drawable="@drawable/ic_transform"
         />

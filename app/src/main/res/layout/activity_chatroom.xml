@@ -73,7 +73,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
         <EditText
-            android:id="@+id/tv_chatroom_input"
+            android:id="@+id/et_chatroom_input"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:hint="Please enter the text"
@@ -87,12 +87,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginLeft="8dp"/>
         <ImageView
+            android:id="@+id/btn_chatroom_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_send"
-            app:layout_constraintEnd_toEndOf="@id/tv_chatroom_input"
-            app:layout_constraintTop_toTopOf="@id/tv_chatroom_input"
-            app:layout_constraintBottom_toBottomOf="@id/tv_chatroom_input"
+            app:layout_constraintEnd_toEndOf="@id/et_chatroom_input"
+            app:layout_constraintTop_toTopOf="@id/et_chatroom_input"
+            app:layout_constraintBottom_toBottomOf="@id/et_chatroom_input"
             android:layout_marginRight="12dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
