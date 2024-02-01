@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< Updated upstream
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="#0000"/> <!-- 투명 배경 -->
     <corners android:radius="500dp"/> <!-- 원형 모양 -->
     <stroke android:width="2dp" android:color="#704684FF"/> <!-- #684FFF 색상의 테두리, 투명도 44 -->
 </shape>
+=======
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+</selector>
+>>>>>>> Stashed changes

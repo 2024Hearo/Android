@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/chk_login_save"
-        android:layout_marginStart="140dp"
+        android:layout_marginStart="120dp"
         android:layout_marginTop="1dp"
         android:layout_toEndOf="@id/chk_login_save"
         android:text="아이디/비밀번호 찾기"

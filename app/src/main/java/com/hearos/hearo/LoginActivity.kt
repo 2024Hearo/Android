@@ -1,5 +1,6 @@
 package com.hearos.hearo
 
+import MypageFragment
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -98,7 +99,11 @@ class LoginActivity : AppCompatActivity() {
                         // Firestore에 사용자 데이터 저장
                         saveUserToFirestore(user)
                     }
-                    navigateToMainActivity(idToken, user?.email ?: "")
+                    // MypageActivity로 이동(임시)
+                    val intent = Intent(this, MypageFragment::class.java)
+                    startActivity(intent)
+                    finish() // LoginActivity 종료
+                    //navigateToMainActivity(idToken, user?.email ?: "")
                 } else {
                     // Firebase 인증 실패
                     Toast.makeText(this, "Firebase 인증 실패: ${task.exception?.localizedMessage}", Toast.LENGTH_SHORT).show()
@@ -106,6 +111,30 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+<<<<<<< Updated upstream
+=======
+    // 사용자 정의 데이터 서버로 전송
+    private fun loginUser(postUserReq: LoginRequest) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = createUser(postUserReq)
+                if (response.isSuccess) {
+                    // 서버 응답 성공 처리
+                } else {
+                    // 서버 응답 실패 처리
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                // 네트워크 오류 등의 예외 처리
+            }
+        }
+    }
+
+    private suspend fun createUser(loginRequest: LoginRequest) : BaseResponse<LoginResponse> {
+        return RetrofitService.loginApi.postLoginUser(loginRequest)
+    }
+
+>>>>>>> Stashed changes
     private fun navigateToMainActivity(idToken: String, email: String) {
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("ID_TOKEN", idToken)
@@ -133,4 +162,5 @@ class LoginActivity : AppCompatActivity() {
                 Log.d("LoginActivity", "Firestore에 사용자 정보 저장 실패", e)
             }
     }
+
 }
