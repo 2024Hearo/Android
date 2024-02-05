@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -16,6 +13,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.hearos.hearo.utils.FirebaseAuthUtils
+import com.hearos.hearo.utils.FirebaseRef
 
 class LoginActivity : AppCompatActivity() {
 
@@ -59,6 +63,55 @@ class LoginActivity : AppCompatActivity() {
 
         // Google 로그인 버튼 참조 및 클릭 리스너 설정
         findViewById<Button>(R.id.btn_login_google).setOnClickListener { signIn() }
+
+
+        //test code
+        findViewById<Button>(R.id.btn_login_kakao).setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+        findViewById<Button>(R.id.btn_login_submit).setOnClickListener {
+            val email = findViewById<EditText>(R.id.edt_login_username).text.toString()
+            val password = findViewById<EditText>(R.id.edt_login_password).text.toString()
+
+            FirebaseAuthUtils.getAuth().signInWithEmailAndPassword(email,password).addOnCompleteListener {
+                    task ->
+                if(task.isSuccessful) {
+                    Toast.makeText(this,"로그인에 성공했습니다!",Toast.LENGTH_SHORT).show()
+                    handleSuccessLogin()
+                }else {
+                    Toast.makeText(this,"아이디와 비밀번호를 확인해주세요.",Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+    }
+
+    private fun handleSuccessLogin() {
+        if( FirebaseAuthUtils.getAuth().currentUser == null) {
+            Toast.makeText(this,"로그인 정보가 올바르지 않습니다",Toast.LENGTH_SHORT).show()
+            finish()
+        }
+        val userUid = FirebaseAuthUtils.getAuth().currentUser?.uid.orEmpty()
+        val currentDB = FirebaseRef.userInfo.child(userUid)
+        val userInfoMap = mutableMapOf<String,Any>()
+        userInfoMap["userId"] = userUid
+        currentDB.updateChildren(userInfoMap)
+        currentDB.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.child("name").value == null ) {
+                    val user = mutableMapOf<String,Any>()
+                    user["name"] = intent.getStringExtra("nickName").toString()
+                    currentDB.updateChildren(user)
+                    return
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
     }
 
     private fun signIn() {
