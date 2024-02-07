@@ -20,13 +20,13 @@
         android:id="@+id/edt_login_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="36dp"
-        android:hint="Username"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
         android:layout_below="@id/img_login_logo"
+        android:layout_marginTop="16dp"
         android:background="@drawable/edittext_custom_bg"
-        android:layout_marginTop="16dp"/>
+        android:hint="Username"
+        android:paddingTop="36dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
 
     <EditText
         android:id="@+id/edt_login_password"

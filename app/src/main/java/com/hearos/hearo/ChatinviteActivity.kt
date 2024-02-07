@@ -6,11 +6,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.hearos.hearo.databinding.ActivityChatinviteBinding
 import com.hearos.hearo.dto.BaseResponse
+import com.hearos.hearo.dto.ChatInviteRes
 import com.hearos.hearo.dto.ChatRequest
 import com.hearos.hearo.utils.RetrofitService
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ChatinviteActivity: AppCompatActivity() {
     private lateinit var binding: ActivityChatinviteBinding
@@ -43,8 +48,9 @@ class ChatinviteActivity: AppCompatActivity() {
                 Toast.makeText(this@ChatinviteActivity, "전송 실패",Toast.LENGTH_SHORT).show()
             }
         }
+
     }
-    private suspend fun inviteChat(ChatRequest : ChatRequest) : BaseResponse<String> {
-        return RetrofitService.chatApi.inviteChat(ChatRequest)
+    private suspend fun inviteChat(chatRequest : ChatRequest) : BaseResponse<ChatInviteRes> {
+        return RetrofitService.chatApi.inviteChat(chatRequest)
     }
 }
