@@ -1,5 +1,6 @@
 package com.hearos.hearo
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,8 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.preferencesDataStore
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -18,8 +21,14 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.hearos.hearo.dto.UserInfo
 import com.hearos.hearo.utils.FirebaseAuthUtils
 import com.hearos.hearo.utils.FirebaseRef
+import com.hearos.hearo.utils.HearoApp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.prefs.Preferences
 
 class LoginActivity : AppCompatActivity() {
 
@@ -69,49 +78,48 @@ class LoginActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_login_kakao).setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
-        findViewById<Button>(R.id.btn_login_submit).setOnClickListener {
-            val email = findViewById<EditText>(R.id.edt_login_username).text.toString()
-            val password = findViewById<EditText>(R.id.edt_login_password).text.toString()
 
-            FirebaseAuthUtils.getAuth().signInWithEmailAndPassword(email,password).addOnCompleteListener {
-                    task ->
-                if(task.isSuccessful) {
-                    Toast.makeText(this,"로그인에 성공했습니다!",Toast.LENGTH_SHORT).show()
-                    handleSuccessLogin()
-                }else {
-                    Toast.makeText(this,"아이디와 비밀번호를 확인해주세요.",Toast.LENGTH_SHORT).show()
-                }
-            }
+        findViewById<Button>(R.id.btn_login_submit).setOnClickListener {
+            login()
         }
 
     }
 
-    private fun handleSuccessLogin() {
+    private fun login() {
+        val email = findViewById<EditText>(R.id.edt_login_username).text.toString()
+        val password = findViewById<EditText>(R.id.edt_login_password).text.toString()
+
+        FirebaseAuthUtils.getAuth().signInWithEmailAndPassword(email,password).addOnCompleteListener {
+                task ->
+            if(task.isSuccessful) {
+                Toast.makeText(this,"로그인에 성공했습니다!",Toast.LENGTH_SHORT).show()
+                handleSuccessLogin(email,intent.getStringExtra("nickName").toString())
+                startActivity(Intent(this, MainActivity::class.java))
+            }else {
+                Toast.makeText(this,"아이디와 비밀번호를 확인해주세요.",Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun handleSuccessLogin(email: String, nickName: String) {
         if( FirebaseAuthUtils.getAuth().currentUser == null) {
             Toast.makeText(this,"로그인 정보가 올바르지 않습니다",Toast.LENGTH_SHORT).show()
             finish()
         }
-        val userUid = FirebaseAuthUtils.getAuth().currentUser?.uid.orEmpty()
-        val currentDB = FirebaseRef.userInfo.child(userUid)
+        val userId = FirebaseAuthUtils.getAuth().currentUser?.uid.orEmpty()
+        val currentDB = FirebaseRef.userInfo.child(userId)
         val userInfoMap = mutableMapOf<String,Any>()
-        userInfoMap["userId"] = userUid
+        //saveUserInfo(userId, nickName)
+        userInfoMap["userId"] = userId
+        userInfoMap["name"] = nickName
+        userInfoMap["email"] = email
         currentDB.updateChildren(userInfoMap)
-        currentDB.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.child("name").value == null ) {
-                    val user = mutableMapOf<String,Any>()
-                    user["name"] = intent.getStringExtra("nickName").toString()
-                    currentDB.updateChildren(user)
-                    return
-                }
+    }
 
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        })
+    private fun saveUserInfo(userId: String, name : String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            HearoApp.getInstance().getDataStore().setUserInfo(userId, name)
+        }
     }
 
     private fun signIn() {
@@ -144,8 +152,9 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // 로그인 성공 - 메인 액티비티로 이동
                     Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-                    val user = FirebaseAuth.getInstance().currentUser
-                    val email = user?.email ?: ""
+                    val email = FirebaseAuthUtils.getAuth().currentUser?.email.orEmpty()
+                    val name = FirebaseAuthUtils.getAuth().currentUser?.displayName
+                    handleSuccessLogin(email, name!!)
                     navigateToMainActivity(idToken, email)
                 } else {
                     // Firebase 인증 실패

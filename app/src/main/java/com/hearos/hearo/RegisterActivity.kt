@@ -18,7 +18,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        //detectEmailAndPasswordEmpty()
+        detectEmailAndPasswordEmpty()
         binding.btnRegisterDone.setOnClickListener {
             registerUser()
         }
