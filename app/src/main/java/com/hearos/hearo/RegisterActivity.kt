@@ -8,6 +8,7 @@ import androidx.core.widget.addTextChangedListener
 import com.google.android.play.integrity.internal.t
 import com.hearos.hearo.databinding.ActivityRegisterBinding
 import com.hearos.hearo.utils.FirebaseAuthUtils
+import com.hearos.hearo.utils.HearoApplication
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -49,7 +50,7 @@ class RegisterActivity : AppCompatActivity() {
             if (task.isSuccessful){
                 Toast.makeText(this,"회원가입에 성공했습니다!",Toast.LENGTH_SHORT).show()
                 val intent = Intent(this,LoginActivity::class.java)
-                intent.putExtra("nickName", nickName)
+                HearoApplication.dataStore.dsName = nickName
                 startActivity(intent)
             } else{
                 Toast.makeText(this,"이미 존재하는 계정이거나, 회원가입에 실패했습니다.",Toast.LENGTH_SHORT).show()

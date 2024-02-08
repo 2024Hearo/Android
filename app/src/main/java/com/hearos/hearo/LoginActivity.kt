@@ -1,6 +1,5 @@
 package com.hearos.hearo
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,27 +7,15 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.preferencesDataStore
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import com.hearos.hearo.dto.UserInfo
 import com.hearos.hearo.utils.FirebaseAuthUtils
 import com.hearos.hearo.utils.FirebaseRef
-import com.hearos.hearo.utils.HearoApp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.util.prefs.Preferences
+import com.hearos.hearo.utils.HearoApplication
 
 class LoginActivity : AppCompatActivity() {
 
@@ -53,7 +40,10 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
-
+        val userId = HearoApplication.dataStore.dsUid
+        if (userId!!.isNotEmpty()) {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
         // 로그인 세션 초기화
         FirebaseAuth.getInstance().signOut()
 
@@ -83,6 +73,7 @@ class LoginActivity : AppCompatActivity() {
             login()
         }
 
+
     }
 
     private fun login() {
@@ -93,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
                 task ->
             if(task.isSuccessful) {
                 Toast.makeText(this,"로그인에 성공했습니다!",Toast.LENGTH_SHORT).show()
-                handleSuccessLogin(email,intent.getStringExtra("nickName").toString())
+                handleSuccessLogin(email, HearoApplication.dataStore.dsName!!)
                 startActivity(Intent(this, MainActivity::class.java))
             }else {
                 Toast.makeText(this,"아이디와 비밀번호를 확인해주세요.",Toast.LENGTH_SHORT).show()
@@ -109,17 +100,15 @@ class LoginActivity : AppCompatActivity() {
         val userId = FirebaseAuthUtils.getAuth().currentUser?.uid.orEmpty()
         val currentDB = FirebaseRef.userInfo.child(userId)
         val userInfoMap = mutableMapOf<String,Any>()
-        //saveUserInfo(userId, nickName)
+        saveUserInfo(userId)
         userInfoMap["userId"] = userId
         userInfoMap["name"] = nickName
         userInfoMap["email"] = email
         currentDB.updateChildren(userInfoMap)
     }
 
-    private fun saveUserInfo(userId: String, name : String) {
-        CoroutineScope(Dispatchers.Main).launch {
-            HearoApp.getInstance().getDataStore().setUserInfo(userId, name)
-        }
+    private fun saveUserInfo(userId: String) {
+        HearoApplication.dataStore.dsUid = userId
     }
 
     private fun signIn() {
