@@ -3,6 +3,7 @@ import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,7 +60,7 @@ class MypageFragment : Fragment() {
 
 
     private fun playSound(fileName: String) {
-        val storageRef = FirebaseStorage.getInstance().reference.child("sound/play/$fileName")
+        val storageRef = FirebaseStorage.getInstance("gs://hearo-2024").reference.child("sound/$fileName")
         val progressDialog = ProgressDialog(context).apply {
             setMessage("로딩 중...")
             setCancelable(false) // 뒤로가기 버튼 등으로 취소 불가능하게 설정
@@ -87,10 +88,11 @@ class MypageFragment : Fragment() {
                     Toast.makeText(context, "재생 성공", Toast.LENGTH_SHORT).show()
                 }
             }
-        }.addOnFailureListener {
-            progressDialog.dismiss() // 실패 시에도 로딩 다이얼로그를 닫음
-            Toast.makeText(context, "오디오 파일 로드 실패: ${it.message}", Toast.LENGTH_LONG).show()
+        }.addOnFailureListener { exception ->
+            Log.e("FirebaseStorage", "Error loading file: ${exception.message}")
+            Toast.makeText(context, "오디오 파일 로드 실패: ${exception.message}", Toast.LENGTH_LONG).show()
         }
+
     }
 
 
