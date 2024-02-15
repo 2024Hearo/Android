@@ -23,7 +23,6 @@
         </activity>
 
         <activity android:name=".ChatinviteActivity"/>
-        <activity android:name=".ChatroomActivity"/>
 
         <activity
             android:name=".LoginActivity"

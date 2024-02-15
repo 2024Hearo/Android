@@ -1,5 +1,6 @@
 package com.hearos.hearo
 
+import MypageFragment
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                     ChatFragment().changeFragment()
                 }
                 R.id.bnvitem_mypage -> {
-                    ChatFragment().changeFragment()
+                    MypageFragment().changeFragment()
                 }
             }
             return@setOnItemSelectedListener true
