@@ -89,8 +89,9 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                android:background="#FFFFFF"
-                android:elevation="5dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_marginLeft="5dp"
@@ -109,15 +110,17 @@
 
             <!-- Second Box -->
             <LinearLayout
+                android:id="@+id/btn_wait"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="#FFFFFF"
-                android:elevation="5dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 >
 
                 <ImageView
@@ -133,11 +136,13 @@
 
             <!-- Third Box -->
             <LinearLayout
+                android:id="@+id/btn_hear"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                android:background="#FFFFFF"
-                android:elevation="5dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_marginLeft="5dp"
