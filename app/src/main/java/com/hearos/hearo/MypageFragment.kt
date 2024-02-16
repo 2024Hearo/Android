@@ -1,4 +1,5 @@
 import android.app.ProgressDialog
+import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.Uri
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -15,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import android.widget.Toast
 import com.hearos.hearo.R
-
+import com.hearos.hearo.VoiceActivity1
 
 
 class MypageFragment : Fragment() {
@@ -55,6 +57,14 @@ class MypageFragment : Fragment() {
         btnHear.setOnClickListener {
             val fileName = "sound3.mp3"
             playSound(fileName)
+        }
+
+        // "btn_plus_voice" 버튼에 대한 클릭 리스너 설정
+        val btnPlusVoice: ImageView = view.findViewById(R.id.ic_plus_voice)
+        btnPlusVoice.setOnClickListener {
+            // VoiceActivity로 이동하기 위한 Intent 생성
+            val intent = Intent(activity, VoiceActivity1::class.java)
+            startActivity(intent)
         }
     }
 
@@ -112,6 +122,9 @@ class MypageFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        mediaPlayer.release() // Fragment가 중지될 때 MediaPlayer 리소스 해제
+        // mediaPlayer가 초기화되었는지 확인
+        if (::mediaPlayer.isInitialized) {
+            mediaPlayer.release() // MediaPlayer 리소스 해제
+        }
     }
 }

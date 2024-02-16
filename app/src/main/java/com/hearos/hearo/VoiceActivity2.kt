@@ -1,4 +1,19 @@
 package com.hearos.hearo
 
-class VoiceActivity2 {
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
+
+class VoiceActivity2 : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_voice2)
+
+        val ContinueButton: Button = findViewById(R.id.btn_continue2)
+        ContinueButton.setOnClickListener{
+            val intent = Intent (this,VoiceActivity2::class.java)
+            startActivity(intent)
+        }
+    }
 }

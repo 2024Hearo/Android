@@ -39,12 +39,14 @@
         android:hint="details"></EditText>
 
     <Button
+        android:id="@+id/btn_continue2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@color/main"
         android:textColor="@color/background"
         android:text="continue">
+
     </Button>
 
 

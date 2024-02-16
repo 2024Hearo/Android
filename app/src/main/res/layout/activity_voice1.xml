@@ -27,16 +27,17 @@
     </ImageView>
 
     <Button
+        android:id="@+id/btn_record"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="음성녹음하기">
+        android:text="Start Recoding">
     </Button>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="파일불러오기">
+        android:text="Load file">
     </Button>
 
     <Button

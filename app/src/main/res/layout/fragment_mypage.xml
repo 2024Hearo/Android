@@ -65,6 +65,14 @@
         android:layout_below="@id/topImageLayout"
         android:layout_marginTop="20dp">
 
+        <RelativeLayout
+            android:id="@+id/SoundSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/soundSection"
+            android:layout_marginTop="20dp">
+
+
         <!-- SOUND Title -->
         <TextView
             android:id="@+id/soundTitle"
@@ -73,6 +81,21 @@
             android:textColor="@color/black"
             android:text="SOUND"
             android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/ic_plus_sound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plus"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="280dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </RelativeLayout>
 
         <!-- Three white boxes under SOUND -->
         <LinearLayout
@@ -179,7 +202,7 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/ic_plus"
+            android:id="@+id/ic_plus_voice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/plus"
