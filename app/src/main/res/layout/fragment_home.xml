@@ -35,6 +35,7 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- BODY Section -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_home_body"
         android:layout_width="match_parent"
@@ -84,6 +85,8 @@
             android:id="@+id/btn_home_newchat"
             android:layout_width="0dp"
             android:layout_height="212dp"
+            android:background="@drawable/shape_roundbox_10"
+            android:backgroundTint="@color/white"
             app:layout_constraintTop_toBottomOf="@id/cl_home_introbox"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_home_aichat"
@@ -134,6 +137,8 @@
             android:id="@+id/btn_home_aichat"
             android:layout_width="0dp"
             android:layout_height="212dp"
+            android:background="@drawable/shape_roundbox_10"
+            android:backgroundTint="@color/white"
             app:layout_constraintTop_toBottomOf="@id/cl_home_introbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_home_newchat"
@@ -180,7 +185,96 @@
                 app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!-- SOUND Section -->
+        <TextView
+            android:id="@+id/tv_home_soundTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Emergancy Voice"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btn_home_newchat"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="24dp"/>
 
+            <!-- Three white boxes under SOUND -->
+            <LinearLayout
+                android:id="@+id/soundBoxes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="10dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_home_soundTitle">
+
+                <!-- First Box -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_roundbox_20"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp">
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/ic_emergancy" />-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="텍스트1" />
+                </LinearLayout>
+
+                <!-- Second Box -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    >
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/ic_wait" />-->
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="텍스트2" />
+                </LinearLayout>
+
+                <!-- Third Box -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp">
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/ic_hear" />-->
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="텍스트3" />
+                </LinearLayout>
+            </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

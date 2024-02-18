@@ -29,7 +29,7 @@
         android:id="@+id/tv_iteminvite_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="su_1234@gmail.com 님에게 채팅 요청이 왔습니다."
+        android:text="닉네임 님으로부터 채팅 요청이 왔습니다."
         android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@id/tv_iteminvite_title"
         app:layout_constraintStart_toStartOf="@id/tv_iteminvite_title"

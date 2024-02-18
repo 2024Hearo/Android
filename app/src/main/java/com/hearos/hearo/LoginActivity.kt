@@ -40,8 +40,9 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
+
         val userId = HearoApplication.dataStore.dsUid
-        if (userId!!.isNotEmpty()) {
+        if (userId != "") {
             startActivity(Intent(this, MainActivity::class.java))
         }
         // 로그인 세션 초기화
@@ -84,8 +85,13 @@ class LoginActivity : AppCompatActivity() {
                 task ->
             if(task.isSuccessful) {
                 Toast.makeText(this,"로그인에 성공했습니다!",Toast.LENGTH_SHORT).show()
-                handleSuccessLogin(email, HearoApplication.dataStore.dsName!!)
-                startActivity(Intent(this, MainActivity::class.java))
+                FirebaseRef.userInfo.child(FirebaseAuthUtils.getUid()).child("name").get().addOnCompleteListener {
+                    val userName = it.result.value
+                    HearoApplication.dataStore.dsName = userName.toString()
+                    saveUserInfo(FirebaseAuthUtils.getAuth().currentUser?.uid!!,HearoApplication.dataStore.dsName!!)
+                    startActivity(Intent(this, MainActivity::class.java))
+                }
+
             }else {
                 Toast.makeText(this,"아이디와 비밀번호를 확인해주세요.",Toast.LENGTH_SHORT).show()
             }
@@ -100,15 +106,16 @@ class LoginActivity : AppCompatActivity() {
         val userId = FirebaseAuthUtils.getAuth().currentUser?.uid.orEmpty()
         val currentDB = FirebaseRef.userInfo.child(userId)
         val userInfoMap = mutableMapOf<String,Any>()
-        saveUserInfo(userId)
+        saveUserInfo(userId, nickName)
         userInfoMap["userId"] = userId
         userInfoMap["name"] = nickName
         userInfoMap["email"] = email
         currentDB.updateChildren(userInfoMap)
     }
 
-    private fun saveUserInfo(userId: String) {
+    private fun saveUserInfo(userId: String, name : String) {
         HearoApplication.dataStore.dsUid = userId
+        HearoApplication.dataStore.dsName = name
     }
 
     private fun signIn() {

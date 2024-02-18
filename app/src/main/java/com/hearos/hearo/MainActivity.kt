@@ -1,14 +1,20 @@
 package com.hearos.hearo
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.hearos.hearo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val manager = supportFragmentManager
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            Log.d("BACK", "back")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        startActivity(Intent(this, ChatinviteActivity::class.java))
+        this.onBackPressedDispatcher.addCallback(this, callback)
 
         initBottomNavigation()
     }
@@ -34,6 +40,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.bnvitem_chat -> {
                     ChatFragment().changeFragment()
+                }
+                R.id.bnvitem_ai -> {
+                    AiChatFragment().changeFragment()
                 }
                 R.id.bnvitem_mypage -> {
                     ChatFragment().changeFragment()
