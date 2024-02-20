@@ -12,10 +12,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.hearos.hearo.databinding.ActivityChatroomBinding
 import com.hearos.hearo.databinding.ItemMessageBinding
+import com.hearos.hearo.dto.HomeRes
 import com.hearos.hearo.dto.MessageModel
 import com.hearos.hearo.utils.FirebaseAuthUtils
 import com.hearos.hearo.utils.FirebaseRef
 import com.hearos.hearo.utils.HearoApplication
+import com.hearos.hearo.utils.RetrofitService
 import java.text.SimpleDateFormat
 
 class ChatroomActivity : AppCompatActivity() {
@@ -49,7 +51,6 @@ class ChatroomActivity : AppCompatActivity() {
         binding.rvChatroom.layoutManager = LinearLayoutManager(this)
         binding.rvChatroom.adapter = chatroomAdapter
         getMessageList(chatRoomId!!)
-
 
     }
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {

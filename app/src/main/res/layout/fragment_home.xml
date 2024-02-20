@@ -58,15 +58,16 @@
                 android:id="@+id/iv_home_profile"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/shape_circle_profile"
+                android:src="@drawable/profile"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
             <TextView
                 android:id="@+id/tv_home_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hi, 수정\nHow was your day today?"
+                android:text="Hi, User\nHow was your day today?"
                 android:textSize="14sp"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@id/iv_home_profile"
                 app:layout_constraintTop_toTopOf="@id/iv_home_profile"
                 app:layout_constraintBottom_toBottomOf="@id/iv_home_profile"
@@ -99,6 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Create"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="NEW CHAT"
-                android:textStyle="bold"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_home_create"
                 app:layout_constraintStart_toStartOf="parent"
@@ -150,6 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Create"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -159,7 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="HEAROBOT"
-                android:textStyle="bold"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_home_create2"
                 app:layout_constraintStart_toStartOf="parent"
@@ -198,83 +201,105 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="24dp"/>
 
+        <!-- SOUND Section -->
+        <LinearLayout
+            android:id="@+id/soundSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_soundTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp"
+            android:paddingVertical="10dp">
+
             <!-- Three white boxes under SOUND -->
             <LinearLayout
                 android:id="@+id/soundBoxes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="10dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_home_soundTitle">
+                android:orientation="horizontal">
 
                 <!-- First Box -->
                 <LinearLayout
+                    android:id="@+id/btn_emerancy"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_roundbox_20"
                     android:elevation="2dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
-<!--                    <ImageView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:src="@drawable/ic_emergancy" />-->
+                    android:layout_marginRight="10dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_emergancy" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="텍스트1" />
+                        android:textColor="@color/black"
+                        android:text="Help me" />
                 </LinearLayout>
 
                 <!-- Second Box -->
                 <LinearLayout
+                    android:id="@+id/btn_wait"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:background="#FFFFFF"
-                    android:elevation="5dp"
+                    android:background="@drawable/shape_roundbox_20"
+                    android:elevation="2dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     >
 
-<!--                    <ImageView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:src="@drawable/ic_wait" />-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_wait" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="텍스트2" />
+                        android:textColor="@color/black"
+                        android:text="wait please" />
                 </LinearLayout>
 
                 <!-- Third Box -->
                 <LinearLayout
+                    android:id="@+id/btn_hear"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
-                    android:background="#FFFFFF"
-                    android:elevation="5dp"
+                    android:background="@drawable/shape_roundbox_20"
+                    android:elevation="2dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginLeft="10dp">
 
-<!--                    <ImageView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:src="@drawable/ic_hear" />-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_hear" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="텍스트3" />
+                        android:textColor="@color/black"
+                        android:text="I can't hear" />
                 </LinearLayout>
             </LinearLayout>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

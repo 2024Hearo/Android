@@ -2,6 +2,7 @@ package com.hearos.hearo
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,14 @@ import android.widget.MediaController
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.hearos.hearo.databinding.ItemMessageBinding
 import com.hearos.hearo.databinding.ItemUsermessageBinding
 import com.hearos.hearo.dto.*
 import com.hearos.hearo.utils.RetrofitService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ChatroomAdapter(val context: Context, val messageList: MutableList<MessageModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -54,45 +59,33 @@ class ChatroomAdapter(val context: Context, val messageList: MutableList<Message
                     val VIDEO_PATH = "android.resource://com.hearos.hearo/" + R.raw.hello
                     val video_uri = Uri.parse(VIDEO_PATH)
                     video.setVideoURI(video_uri)
-                    video.setMediaController(MediaController(context))     // 없으면 에러
-                    video.requestFocus()    // 준비하는 과정을 미리함
+                    video.setMediaController(MediaController(context))
+                    video.requestFocus()
 
                     video.setOnPreparedListener {
-
-                        video.start()       // 동영상 재개
+                        video.start()
                     }
-
                     holder.recieveImage.visibility = View.VISIBLE
-//                    val chatRoomRequest = ChatRoomRequest(holder.receiveMessage.toString())
+
 //                    CoroutineScope(Dispatchers.IO).launch {
-//                        val response = getSign(chatRoomRequest)
-//                        if (response.isSuccess) {
-//                            Log.d("TEXTTOSIGN", response.toString())
+//                        val response = getSign(holder.receiveMessage.toString())
+//                        if (response.isNotEmpty()) {
+//                            Log.d("TEXTTOSIGN", response)
 //                            val video = holder.recieveImage
-//                            val VIDEO_PATH = "android.resource://com.hearos.hearo/" + R.raw.hello
-//                            val video_uri = Uri.parse(VIDEO_PATH)
+//                            val video_uri = Uri.parse(response)
 //                            video.setVideoURI(video_uri)
-//                            video.setMediaController(MediaController(context))     // 없으면 에러
-//                            video.requestFocus()    // 준비하는 과정을 미리함
+//                            video.setMediaController(MediaController(context))
+//                            video.requestFocus()
 //
 //                            video.setOnPreparedListener {
-//
-//                                video.start()       // 동영상 재개
+//                                video.start()
 //                            }
-//
 //                            holder.recieveImage.visibility = View.VISIBLE
 //                        } else {
-//                            Log.d("TEXTTOSIGN", "실패 + ${response.message}")
+//                            Log.d("TEXTTOSIGN", "실패 + ${response}")
 //                        }
 //                    }
                 }
-//                if (currentMessage.imageUrl != "null") {
-//                    Glide.with(context)
-//                        .load(currentMessage.imageUrl)
-//                        .into(holder.recieveImage)
-//                } else {
-//                    //holder.recieveImage.setImageResource(R.drawable.shape_roundbox_20)
-//                }
             }
         }
     }
@@ -119,7 +112,7 @@ class ChatroomAdapter(val context: Context, val messageList: MutableList<Message
         val recieveImage = binding.ivMessageHandsign
     }
 
-    private suspend fun getSign(chatRoomRequest: ChatRoomRequest) : BaseResponse<String> {
-        return RetrofitService.chatApi.getSign(chatRoomRequest)
+    private suspend fun getSign(message: String) : String {
+        return RetrofitService.chatApi.getSign(message)
     }
 }

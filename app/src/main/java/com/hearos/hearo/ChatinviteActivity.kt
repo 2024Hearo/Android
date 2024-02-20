@@ -5,19 +5,14 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.hearos.hearo.databinding.ActivityChatinviteBinding
 import com.hearos.hearo.dto.*
 import com.hearos.hearo.utils.FirebaseAuthUtils
-import com.hearos.hearo.utils.FirebaseRef
 import com.hearos.hearo.utils.RetrofitService
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class ChatinviteActivity: AppCompatActivity() {
@@ -33,31 +28,37 @@ class ChatinviteActivity: AppCompatActivity() {
             finish()
         }
         binding.btnInvitechatInvite.setOnClickListener {
-            sendEmail()
+            //sendEmail()
+            finish()
         }
-
     }
 
     private fun sendEmail() {
         val email = binding.etInvitechatEmail.text.toString()
         val roomName = binding.etInvitechatTitle.text.toString()
-        val inviteChatReq = ChatRequest(email,roomName)
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = inviteChat(inviteChatReq)
-            Log.d("CHATINVITEACT", response.toString())
-            if (response.isSuccess) {
-                Log.d("CHATINVITEACT", "초대 성공 + ${response.result}")
-                Toast.makeText(this@ChatinviteActivity,"초대 성공",Toast.LENGTH_SHORT).show()
-                finish()
-            } else {
-                Log.d("CHATINVITEACT", "실패 + ${response.message}")
-                Toast.makeText(this@ChatinviteActivity, "초대 실패",Toast.LENGTH_SHORT).show()
+        FirebaseAuthUtils.getAuth().currentUser?.getIdToken(true)?.addOnSuccessListener { result ->
+            val token = result.token
+            Log.d("TOKEN", token!!)
+            val inviteChatReq = ChatRequest(email,roomName,token)
+            CoroutineScope(Dispatchers.IO).launch {
+                val response = inviteChat(inviteChatReq)
+                Log.d("CHATINVITEACT", response.toString())
+                if (response.success) {
+                    Log.d("CHATINVITEACT", "초대 성공 + ${response}")
+                    Toast.makeText(this@ChatinviteActivity,"초대 성공",Toast.LENGTH_SHORT).show()
+                    finish()
+                } else {
+                    Log.d("CHATINVITEACT", "실패 + ${response}")
+                    Toast.makeText(this@ChatinviteActivity, "초대 실패",Toast.LENGTH_SHORT).show()
+                }
             }
+        }?.addOnFailureListener { exception ->
+            Log.e("TAG", "토큰 받아오기 실패: ${exception.message}")
         }
 
     }
 
-    private suspend fun inviteChat(chatRequest : ChatRequest) : BaseResponse<ChatInviteRes> {
+    private suspend fun inviteChat(chatRequest : ChatRequest) : ChatInviteRes {
         return RetrofitService.chatApi.inviteChat(chatRequest)
     }
 

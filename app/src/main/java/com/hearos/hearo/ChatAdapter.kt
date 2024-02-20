@@ -23,7 +23,7 @@ class ChatAdapter(val context: Context, val dataList : List<ChatRoom>) : Recycle
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentUser = dataList[position]
         val imgUrl = dataList[position].chatProfile
-        holder.roomName!!.text = currentUser.roomName
+        holder.roomName!!.text = currentUser.roomname
         holder.content!!.text = currentUser.lastMessage
         holder.time!!.text = currentUser.timeStamp
         if(imgUrl != null) {
@@ -37,8 +37,8 @@ class ChatAdapter(val context: Context, val dataList : List<ChatRoom>) : Recycle
 
         holder.itemView.setOnClickListener{
             val intent = Intent(context, ChatroomActivity::class.java)
-            intent.putExtra("roomId", currentUser.chatRoomId)
-            intent.putExtra("roomName", currentUser.roomName)
+            intent.putExtra("roomId", currentUser.ChatRoomID)
+            intent.putExtra("roomName", currentUser.roomname)
             context.startActivity(intent)
         }
     }

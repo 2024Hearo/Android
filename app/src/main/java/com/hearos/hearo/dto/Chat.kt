@@ -1,13 +1,17 @@
 package com.hearos.hearo.dto
 
 data class ChatRoom(
-    var chatRoomId :String? = null,
-    val accepted : Boolean? = null,
-    val roomName : String? = null,
+    var ChatRoomID :String? = null,
+    val roomname : String? = null,
     val chatProfile : String? = null,
     val lastMessage : String? = null,
     val timeStamp: String? = null,
+    //val invitee: List<Invitee>? = null
 )
+//data class Invitee(
+//    val name: String? = null,
+//    val uid: String? = null,
+//)
 
 data class MessageModel (
     val senderUid : String = "",
@@ -22,3 +26,8 @@ data class MessageModel (
         const val VIEW_TYPE_ME = 1
     }
 }
+
+data class AiChat(
+    val lastMessage : String? = null,
+    val timeStamp: String? = null,
+)

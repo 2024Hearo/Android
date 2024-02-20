@@ -13,8 +13,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.hearos.hearo.databinding.FragmentChatBinding
 import com.hearos.hearo.dto.*
-import com.hearos.hearo.utils.FirebaseAuthUtils
 import com.hearos.hearo.utils.FirebaseRef
+import com.hearos.hearo.utils.HearoApplication
 
 class ChatFragment : Fragment() {
     private lateinit var binding : FragmentChatBinding
@@ -46,7 +46,7 @@ class ChatFragment : Fragment() {
                 chatRoomList.clear()
                 for (dataModel in dataSnapshot.children) {
                     val chatRoom = dataModel.getValue(ChatRoom::class.java)
-                    chatRoom?.chatRoomId = dataModel.key
+                    chatRoom?.ChatRoomID = dataModel.key
                     Log.d("CHATLIST", chatRoom.toString())
                     chatRoomList.add(chatRoom!!)
                 }
@@ -57,7 +57,7 @@ class ChatFragment : Fragment() {
                 Log.w("CHAT", "onCancelled", databseError.toException())
             }
         }
-        FirebaseRef.userInfo.child(FirebaseAuthUtils.getUid()).child("ChatRooms").addListenerForSingleValueEvent(postListener)
+        FirebaseRef.userInfo.child(HearoApplication.dataStore.dsUid!!).child("chat").addValueEventListener(postListener)
     }
 
 }

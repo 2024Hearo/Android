@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
         binding.tvHomeContent.text = "Hi, "+HearoApplication.dataStore.dsName+"\nHow was your day today?"
 
         binding.btnHomeNewchat.setOnClickListener {
-            startActivity(Intent(context, ChatinviteActivity::class.java))
+            startActivity(Intent(context, ChatroomActivity::class.java))
         }
         binding.btnHomeAichat.setOnClickListener {
             changeFragment()

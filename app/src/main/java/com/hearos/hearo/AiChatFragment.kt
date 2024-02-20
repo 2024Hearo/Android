@@ -8,22 +8,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.ai.client.generativeai.GenerativeModel
-import com.google.ai.client.generativeai.type.content
 
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.hearos.hearo.databinding.ActivityChatroomBinding
-import com.hearos.hearo.dto.BaseResponse
-import com.hearos.hearo.dto.ChatInviteRes
-import com.hearos.hearo.dto.ChatRequest
+
 
 import com.hearos.hearo.dto.MessageModel
-import com.hearos.hearo.utils.FirebaseAuthUtils
 import com.hearos.hearo.utils.FirebaseRef
 import com.hearos.hearo.utils.HearoApplication
-import com.hearos.hearo.utils.RetrofitService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,9 +38,6 @@ class AiChatFragment : Fragment() {
     ): View? {
         binding = ActivityChatroomBinding.inflate(inflater, container, false)
 
-//        binding.btnChatroomSend.setOnClickListener {
-//            sendMessage()
-//        }
         chatroomAdapter = ChatroomAdapter(requireContext(), messageList)
         binding.rvChatroom.layoutManager = LinearLayoutManager(context)
         binding.rvChatroom.adapter = chatroomAdapter
@@ -100,15 +92,6 @@ class AiChatFragment : Fragment() {
         FirebaseRef.userInfo.child(HearoApplication.dataStore.dsUid!!).child("GEMINI").addValueEventListener(postListener)
     }
 
-//    private suspend fun sendMessage(generativeModel: GenerativeModel) {
-//        val prompt = binding.etChatroomInput.text.toString()
-//        val response = generativeModel.generateContent(prompt)
-//        val sendTime = getSendTime()
-//        val messageModel = MessageModel(HearoApplication.dataStore.dsUid!!, "Hearobot", prompt, sendTime)
-//        FirebaseRef.userInfo.child("AiChat").push().setValue(messageModel)
-//
-//        binding.etChatroomInput.setText(null)
-//    }
 
     private fun getSendTime(): String {
         try {
