@@ -91,6 +91,13 @@ class LoginActivity : AppCompatActivity() {
                     saveUserInfo(FirebaseAuthUtils.getAuth().currentUser?.uid!!,HearoApplication.dataStore.dsName!!)
                     startActivity(Intent(this, MainActivity::class.java))
                 }
+                FirebaseAuthUtils.getAuth().currentUser?.getIdToken(true)?.addOnSuccessListener { result ->
+                    val token = result.token
+                    Log.d("TOKEN", token!!)
+                }?.addOnFailureListener { exception ->
+                    // 토큰 받아오기 실패
+                    Log.e("TAG", "토큰 받아오기 실패: ${exception.message}")
+                }
 
             }else {
                 Toast.makeText(this,"아이디와 비밀번호를 확인해주세요.",Toast.LENGTH_SHORT).show()
