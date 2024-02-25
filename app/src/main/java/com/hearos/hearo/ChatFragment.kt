@@ -13,13 +13,13 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.hearos.hearo.databinding.FragmentChatBinding
-import com.hearos.hearo.dto.ChatList
-import com.hearos.hearo.utils.FirebaseAuthUtils
+import com.hearos.hearo.dto.*
 import com.hearos.hearo.utils.FirebaseRef
+import com.hearos.hearo.utils.HearoApplication
 
 class ChatFragment : Fragment() {
     private lateinit var binding : FragmentChatBinding
-    private var chatRoomList = mutableListOf<ChatList>()
+    private var chatRoomList = mutableListOf<ChatRoom>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,8 +42,6 @@ class ChatFragment : Fragment() {
         return binding.root
     }
 
-
-
     private fun initList() {
         val chatAdapter : ChatAdapter = ChatAdapter(requireContext(), chatRoomList)
         binding.rvChat.layoutManager = LinearLayoutManager(context)
@@ -52,8 +50,10 @@ class ChatFragment : Fragment() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 chatRoomList.clear()
-                for (datamModel in dataSnapshot.children) {
-                    val chatRoom = datamModel.getValue(ChatList::class.java)
+                for (dataModel in dataSnapshot.children) {
+                    val chatRoom = dataModel.getValue(ChatRoom::class.java)
+                    chatRoom?.ChatRoomID = dataModel.key
+                    Log.d("CHATLIST", chatRoom.toString())
                     chatRoomList.add(chatRoom!!)
                 }
                 chatAdapter.notifyDataSetChanged()
@@ -63,25 +63,7 @@ class ChatFragment : Fragment() {
                 Log.w("CHAT", "onCancelled", databseError.toException())
             }
         }
-        FirebaseRef.chatRoom.child(FirebaseAuthUtils.getUid()).addValueEventListener(postListener)
+        FirebaseRef.userInfo.child(HearoApplication.dataStore.dsUid!!).child("chat").addValueEventListener(postListener)
     }
-
-
-//    private fun getAccessToken(callback: (String) -> Unit) {
-//        val postListener = object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                val data = dataSnapshot.getValue(com.chrome.chattingapp.authentication.UserInfo::class.java)
-//                val accessToken = data?.accessToken ?: ""
-//                callback(accessToken)
-//            }
-//
-//            override fun onCancelled(databaseError: DatabaseError) {
-//                Log.w("ChatListFragment", "onCancelled", databaseError.toException())
-//            }
-//        }
-//
-//        FirebaseRef.userInfo.child(FirebaseAuthUtils.getUid()).addListenerForSingleValueEvent(postListener)
-//    }
-
 
 }

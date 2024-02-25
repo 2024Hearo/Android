@@ -1,6 +1,5 @@
 package com.hearos.hearo
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,27 +7,15 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.preferencesDataStore
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import com.hearos.hearo.dto.UserInfo
 import com.hearos.hearo.utils.FirebaseAuthUtils
 import com.hearos.hearo.utils.FirebaseRef
-import com.hearos.hearo.utils.HearoApp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.util.prefs.Preferences
+import com.hearos.hearo.utils.HearoApplication
 
 class LoginActivity : AppCompatActivity() {
 
@@ -54,27 +41,30 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // 로그인 세션 초기화
-        FirebaseAuth.getInstance().signOut()
+        val userId = HearoApplication.dataStore.dsUid
+        if (userId != "") {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+//        // 로그인 세션 초기화
+//        FirebaseAuth.getInstance().signOut()
+//
+//        // GoogleSignInOptions 구성
+//        val defaultWebClientId = resources.getString(
+//            resources.getIdentifier("default_web_client_id", "string", packageName)
+//        )
+//
+//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//            .requestIdToken(defaultWebClientId)
+//            .requestEmail()
+//            .build()
+//
+//        // GoogleSignInClient 초기화
+//        googleSignInClient = GoogleSignIn.getClient(this, gso)
+//
+//        // Google 로그인 버튼 참조 및 클릭 리스너 설정
+//        findViewById<Button>(R.id.btn_login_google).setOnClickListener { signIn() }
 
-        // GoogleSignInOptions 구성
-        val defaultWebClientId = resources.getString(
-            resources.getIdentifier("default_web_client_id", "string", packageName)
-        )
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(defaultWebClientId)
-            .requestEmail()
-            .build()
-
-        // GoogleSignInClient 초기화
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-
-        // Google 로그인 버튼 참조 및 클릭 리스너 설정
-        findViewById<Button>(R.id.btn_login_google).setOnClickListener { signIn() }
-
-
-        //test code
         findViewById<Button>(R.id.btn_login_kakao).setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
@@ -83,6 +73,7 @@ class LoginActivity : AppCompatActivity() {
             login()
         }
 
+
     }
 
     private fun login() {
@@ -90,18 +81,41 @@ class LoginActivity : AppCompatActivity() {
         val email = findViewById<EditText>(R.id.edt_login_username).text.toString()
         val password = findViewById<EditText>(R.id.edt_login_password).text.toString()
 
-        progressBar.visibility = View.VISIBLE // 로딩 인디케이터 표시
 
-        FirebaseAuthUtils.getAuth().signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-            progressBar.visibility = View.GONE // 로그인 시도 완료 후 로딩 인디케이터 숨김
-            if (task.isSuccessful) {
-                Log.d("LoginActivity", "로그인 성공") // 로그 추가
-                Toast.makeText(this, "로그인에 성공했습니다!", Toast.LENGTH_SHORT).show()
-                handleSuccessLogin(email, intent.getStringExtra("nickName").toString())
-                startActivity(Intent(this, MainActivity::class.java))
-            } else {
-                Log.d("LoginActivity", "로그인 실패: ${task.exception?.localizedMessage}") // 로그 추가
-                Toast.makeText(this, "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
+        //progressBar.visibility = View.VISIBLE // 로딩 인디케이터 표시
+
+       // FirebaseAuthUtils.getAuth().signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            //progressBar.visibility = View.GONE // 로그인 시도 완료 후 로딩 인디케이터 숨김
+            //if (task.isSuccessful) {
+                //Log.d("LoginActivity", "로그인 성공") // 로그 추가
+                //Toast.makeText(this, "로그인에 성공했습니다!", Toast.LENGTH_SHORT).show()
+                //handleSuccessLogin(email, intent.getStringExtra("nickName").toString())
+                //startActivity(Intent(this, MainActivity::class.java))
+            //} else {
+                //Log.d("LoginActivity", "로그인 실패: ${task.exception?.localizedMessage}") // 로그 추가
+                //Toast.makeText(this, "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
+
+        FirebaseAuthUtils.getAuth().signInWithEmailAndPassword(email,password).addOnCompleteListener {
+                task ->
+            if(task.isSuccessful) {
+                Toast.makeText(this,"로그인에 성공했습니다!",Toast.LENGTH_SHORT).show()
+                FirebaseRef.userInfo.child(FirebaseAuthUtils.getUid()).child("name").get().addOnCompleteListener {
+                    val userName = it.result.value
+                    HearoApplication.dataStore.dsName = userName.toString()
+                    saveUserInfo(FirebaseAuthUtils.getAuth().currentUser?.uid!!,HearoApplication.dataStore.dsName!!)
+                    startActivity(Intent(this, MainActivity::class.java))
+                }
+                FirebaseAuthUtils.getAuth().currentUser?.getIdToken(true)?.addOnSuccessListener { result ->
+                    val token = result.token
+                    Log.d("TOKEN", token!!)
+                }?.addOnFailureListener { exception ->
+                    // 토큰 받아오기 실패
+                    Log.e("TAG", "토큰 받아오기 실패: ${exception.message}")
+                }
+
+            }else {
+                Toast.makeText(this,"아이디와 비밀번호를 확인해주세요.",Toast.LENGTH_SHORT).show()
+
             }
         }
     }
@@ -114,7 +128,7 @@ class LoginActivity : AppCompatActivity() {
         val userId = FirebaseAuthUtils.getAuth().currentUser?.uid.orEmpty()
         val currentDB = FirebaseRef.userInfo.child(userId)
         val userInfoMap = mutableMapOf<String,Any>()
-        //saveUserInfo(userId, nickName)
+        saveUserInfo(userId, nickName)
         userInfoMap["userId"] = userId
         userInfoMap["name"] = nickName
         userInfoMap["email"] = email
@@ -122,9 +136,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun saveUserInfo(userId: String, name : String) {
-        CoroutineScope(Dispatchers.Main).launch {
-            HearoApp.getInstance().getDataStore().setUserInfo(userId, name)
-        }
+        HearoApplication.dataStore.dsUid = userId
+        HearoApplication.dataStore.dsName = name
     }
 
     private fun signIn() {
