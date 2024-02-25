@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background"
+    android:padding="16dp">
+
+    <!-- Top Bar with "MY" title -->
+    <TextView
+        android:id="@+id/topBarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MY"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp" />
+
+    <!-- Image View at the top -->
+    <RelativeLayout
+        android:id="@+id/topImageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mypage_bgd"/>
+
+        <ImageView
+            android:id="@+id/userProfileImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/ic_user_profile_shape"
+            android:padding="2dp"
+            android:src="@drawable/ic_user_profile_shape"/>
+
+        <!-- User Email TextView -->
+        <TextView
+            android:id="@+id/userEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userProfileImage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="user@example.com"
+            android:textSize="16sp"
+            android:textColor="#000000" />
+    </RelativeLayout>
+
+
+    <!-- SOUND Section -->
+    <LinearLayout
+        android:id="@+id/soundSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/topImageLayout"
+        android:layout_marginTop="20dp">
+
+        <RelativeLayout
+            android:id="@+id/SoundSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/soundSection"
+            android:layout_marginTop="20dp">
+
+
+        <!-- SOUND Title -->
+        <TextView
+            android:id="@+id/soundTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="SOUND"
+            android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/ic_plus_sound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plus"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="280dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </RelativeLayout>
+
+        <!-- Three white boxes under SOUND -->
+        <LinearLayout
+            android:id="@+id/soundBoxes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="-10dp"
+            android:layout_marginTop="10dp">
+
+            <!-- First Box -->
+            <LinearLayout
+                android:id="@+id/btn_emerancy"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_emergancy" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Help me" />
+            </LinearLayout>
+
+            <!-- Second Box -->
+            <LinearLayout
+                android:id="@+id/btn_wait"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_wait" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="wait please" />
+            </LinearLayout>
+
+            <!-- Third Box -->
+            <LinearLayout
+                android:id="@+id/btn_hear"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_hear" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="I can't hear" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- MY VOICE Section -->
+    <RelativeLayout
+        android:id="@+id/myVoiceSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/soundSection"
+        android:layout_marginTop="20dp">
+
+        <!-- MY VOICE Title and Plus Icon -->
+        <TextView
+            android:id="@+id/myVoiceTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MY VOICE"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/ic_plus_voice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="289dp"
+            android:layout_marginRight="-10dp"
+            android:layout_toRightOf="@id/myVoiceTitle"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/plus"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/voiceBox"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:minHeight="100dp"
+        android:background="#FFFFFF"
+        android:text="Please register your voice"
+        android:textColor="#808080"
+        android:gravity="center"
+        android:elevation="5dp"
+        android:layout_below="@id/myVoiceSection"
+        android:layout_marginTop="10dp"/>
+
+    <!-- SETTING Section -->
+    <LinearLayout
+        android:id="@+id/settingSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/voiceBox"
+        android:layout_marginTop="20dp">
+
+        <!-- Setting Title -->
+        <TextView
+            android:id="@+id/settingTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Setting"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <!-- Settings List under Setting -->
+        <LinearLayout
+            android:id="@+id/settingsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:elevation="5dp"
+            android:orientation="vertical"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="알림 설정" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="1:1문의" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="이용 약관" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="서비스 가이드" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="로그아웃" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

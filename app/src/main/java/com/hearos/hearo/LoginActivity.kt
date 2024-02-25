@@ -77,8 +77,23 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login() {
+        Log.d("LoginActivity", "로그인 시작") // 로그 추가
         val email = findViewById<EditText>(R.id.edt_login_username).text.toString()
         val password = findViewById<EditText>(R.id.edt_login_password).text.toString()
+
+
+        //progressBar.visibility = View.VISIBLE // 로딩 인디케이터 표시
+
+       // FirebaseAuthUtils.getAuth().signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            //progressBar.visibility = View.GONE // 로그인 시도 완료 후 로딩 인디케이터 숨김
+            //if (task.isSuccessful) {
+                //Log.d("LoginActivity", "로그인 성공") // 로그 추가
+                //Toast.makeText(this, "로그인에 성공했습니다!", Toast.LENGTH_SHORT).show()
+                //handleSuccessLogin(email, intent.getStringExtra("nickName").toString())
+                //startActivity(Intent(this, MainActivity::class.java))
+            //} else {
+                //Log.d("LoginActivity", "로그인 실패: ${task.exception?.localizedMessage}") // 로그 추가
+                //Toast.makeText(this, "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
 
         FirebaseAuthUtils.getAuth().signInWithEmailAndPassword(email,password).addOnCompleteListener {
                 task ->
@@ -100,6 +115,7 @@ class LoginActivity : AppCompatActivity() {
 
             }else {
                 Toast.makeText(this,"아이디와 비밀번호를 확인해주세요.",Toast.LENGTH_SHORT).show()
+
             }
         }
     }
@@ -145,21 +161,22 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    // Google 로그인 함수 수정
     private fun firebaseAuthWithGoogle(idToken: String) {
-        Log.d("LoginActivity", "ID Token: $idToken")
+        Log.d("LoginActivity", "Google 로그인 시도: ID Token: $idToken") // 로그 추가
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         FirebaseAuth.getInstance().signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
-                progressBar.visibility = View.GONE  // 로그인 성공 또는 실패 시 ProgressBar 숨김
+                progressBar.visibility = View.GONE // 로그인 완료 후 로딩 인디케이터 숨김
                 if (task.isSuccessful) {
-                    // 로그인 성공 - 메인 액티비티로 이동
+                    Log.d("LoginActivity", "Google 로그인 성공") // 로그 추가
                     Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                     val email = FirebaseAuthUtils.getAuth().currentUser?.email.orEmpty()
                     val name = FirebaseAuthUtils.getAuth().currentUser?.displayName
                     handleSuccessLogin(email, name!!)
                     navigateToMainActivity(idToken, email)
                 } else {
-                    // Firebase 인증 실패
+                    Log.d("LoginActivity", "Google 로그인 실패: ${task.exception?.localizedMessage}") // 로그 추가
                     Toast.makeText(this, "Firebase 인증 실패: ${task.exception?.localizedMessage}", Toast.LENGTH_SHORT).show()
                 }
             }

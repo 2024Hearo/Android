@@ -1,6 +1,7 @@
 package com.hearos.hearo
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -27,11 +28,16 @@ class ChatFragment : Fragment() {
     ): View? {
         binding = FragmentChatBinding.inflate(inflater, container, false)
 
-        binding.btnChatCreate.setOnClickListener {
-            startActivity(Intent(context, ChatinviteActivity::class.java))
-        }
+//        binding.btnChatCreate.setOnClickListener {
+//            startActivity(Intent(context, ChatinviteActivity::class.java))
+//        }
+//
+//        initList()
+       // binding.btnChatCreate.setOnClickListener {
+            //val PATH = "android.resource://com.hearos.hearo/" + R.raw.sound1
+            //val url = Uri.parse(PATH)
 
-        initList()
+        //}
 
         return binding.root
     }
