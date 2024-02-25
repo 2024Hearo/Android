@@ -205,13 +205,13 @@
             android:id="@+id/ic_plus_voice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/plus"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_marginLeft="289dp"
+            android:layout_marginRight="-10dp"
             android:layout_toRightOf="@id/myVoiceTitle"
-            android:layout_marginLeft="280dp"
             android:clickable="true"
             android:focusable="true"
+            android:src="@drawable/plus"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

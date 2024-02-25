@@ -26,6 +26,14 @@
         android:src="@drawable/ic_bar1">
     </ImageView>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+
     <Button
         android:id="@+id/btn_record"
         android:layout_width="match_parent"
@@ -35,6 +43,7 @@
     </Button>
 
     <Button
+        android:id="@+id/btn_upload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Load file">

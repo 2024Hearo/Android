@@ -2,27 +2,33 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.storage.FirebaseStorage
 import android.widget.Toast
 import com.hearos.hearo.R
 import com.hearos.hearo.VoiceActivity1
+import com.hearos.hearo.dto.SoundRes
+import com.hearos.hearo.utils.RetrofitService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class MypageFragment : Fragment() {
 
     private lateinit var mediaPlayer: MediaPlayer
+
+    private suspend fun PlaySound(filename:String) : SoundRes {
+        return RetrofitService.MypageApi.getAudioFileUrl(filename = filename )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,70 +49,66 @@ class MypageFragment : Fragment() {
         // 오디오 재생 버튼 리스너 설정
         val btnEmerancy: LinearLayout = view.findViewById(R.id.btn_emerancy)
         btnEmerancy.setOnClickListener {
-            val fileName = "sound1.mp3"
+            val fileName = "help.mp3"
             playSound(fileName)
         }
+
 
         val btnWait: LinearLayout = view.findViewById(R.id.btn_wait)
         btnWait.setOnClickListener {
-            val fileName = "sound2.mp3"
+            val fileName = "wait.mp3"
             playSound(fileName)
         }
 
-        val btnHear: LinearLayout = view.findViewById(R.id.btn_hear)
-        btnHear.setOnClickListener {
-            val fileName = "sound3.mp3"
-            playSound(fileName)
+        val btnProb: LinearLayout = view.findViewById(R.id.btn_hear) // 올바른 변수명으로 변경
+        btnProb.setOnClickListener {
+            // MediaPlayer를 이용하여 raw 폴더 내의 problem.mp3 파일 재생
+            val mediaPlayer = MediaPlayer.create(context, R.raw.problem)
+            mediaPlayer.start() // 사운드 재생 시작
+
+            mediaPlayer.setOnCompletionListener {
+                // 재생이 완료되면 MediaPlayer 리소스 해제
+                it.release()
+            }
         }
+
 
         // "btn_plus_voice" 버튼에 대한 클릭 리스너 설정
         val btnPlusVoice: ImageView = view.findViewById(R.id.ic_plus_voice)
         btnPlusVoice.setOnClickListener {
-            // VoiceActivity로 이동하기 위한 Intent 생성
+            // VoiceActivity로 이동
             val intent = Intent(activity, VoiceActivity1::class.java)
             startActivity(intent)
         }
     }
 
-
+    //소리
     private fun playSound(fileName: String) {
-        val storageRef = FirebaseStorage.getInstance("gs://hearo-2024").reference.child("sound/$fileName")
+        // 로딩 다이얼로그 시작
         val progressDialog = ProgressDialog(context).apply {
-            setMessage("로딩 중...")
-            setCancelable(false) // 뒤로가기 버튼 등으로 취소 불가능하게 설정
-            show() // 다이얼로그 표시
+            setMessage("Loading...")
+            isIndeterminate = true
+            setCancelable(false)
+            show()
         }
 
-        storageRef.downloadUrl.addOnSuccessListener { uri ->
-            if (::mediaPlayer.isInitialized) mediaPlayer.release() // 기존 MediaPlayer가 초기화되어 있으면 먼저 해제
+        Log.d("MypageFragment", "playSound called with fileName: $fileName")
 
-            mediaPlayer = MediaPlayer().apply {
-                setAudioAttributes(
-                    AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .build()
-                )
-                setDataSource(requireContext(), uri)
-                prepareAsync() // 비동기 준비
-                setOnPreparedListener {
-                    progressDialog.dismiss() // 준비가 완료되면 로딩 다이얼로그를 닫음
-                    start() // 재생 시작
-                }
-                setOnCompletionListener {
-                    // 재생이 완료되면 "재생 성공" 메시지 표시
-                    Toast.makeText(context, "재생 성공", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }.addOnFailureListener { exception ->
-            Log.e("FirebaseStorage", "Error loading file: ${exception.message}")
-            Toast.makeText(context, "오디오 파일 로드 실패: ${exception.message}", Toast.LENGTH_LONG).show()
-        }
-
+       // CoroutineScope(Dispatchers.IO).launch {
+            //val response = PlaySound(fileName)
+            //Log.d("sound", response.toString())
+            //if (response.url.isNotEmpty()) {
+                //playAudioFromUrl(response.url)
+                //Log.d("sound", "초대 성공 + ${response}")
+            //} else {
+           //     Log.d("sound", "실패 + ${response}")
+           // }
+       // }
     }
 
+    private fun playAudioFromUrl(url: String) {
+        if (::mediaPlayer.isInitialized) mediaPlayer.release()
 
-    private fun prepareMediaPlayer(uri: Uri) {
         mediaPlayer = MediaPlayer().apply {
             setAudioAttributes(
                 AudioAttributes.Builder()
@@ -114,17 +116,19 @@ class MypageFragment : Fragment() {
                     .setUsage(AudioAttributes.USAGE_MEDIA)
                     .build()
             )
-            setDataSource(requireContext(), uri)
-            prepareAsync()
-            setOnPreparedListener { start() } // 준비가 완료되면 재생 시작
+            setDataSource(url)
+            prepareAsync() // 비동기 준비
+            setOnPreparedListener { start() } // 준비가 되면 시작
+            setOnCompletionListener {
+                Toast.makeText(context, "재생 완료", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        // mediaPlayer가 초기화되었는지 확인
+    override fun onDestroy() {
+        super.onDestroy()
         if (::mediaPlayer.isInitialized) {
-            mediaPlayer.release() // MediaPlayer 리소스 해제
+            mediaPlayer.release()
         }
     }
 }

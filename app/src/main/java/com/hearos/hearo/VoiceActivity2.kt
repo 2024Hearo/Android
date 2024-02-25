@@ -12,7 +12,7 @@ class VoiceActivity2 : AppCompatActivity() {
 
         val ContinueButton: Button = findViewById(R.id.btn_continue2)
         ContinueButton.setOnClickListener{
-            val intent = Intent (this,VoiceActivity2::class.java)
+            val intent = Intent (this,VoiceActivity3::class.java)
             startActivity(intent)
         }
     }

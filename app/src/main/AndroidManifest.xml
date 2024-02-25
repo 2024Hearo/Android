@@ -9,7 +9,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
 
+
     <application
+        android:largeHeap="true"
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -40,9 +42,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".VoiceActivity1"/>
+        <activity android:name=".VoiceActivity1"
+            android:exported="true">
+        </activity>
         <activity android:name=".VoiceActivity2"/>
-
+        <activity android:name=".VoiceActivity3"/>
     </application>
 
 </manifest>
