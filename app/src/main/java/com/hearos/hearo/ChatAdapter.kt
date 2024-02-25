@@ -26,14 +26,14 @@ class ChatAdapter(val context: Context, val dataList : List<ChatRoom>) : Recycle
         holder.roomName!!.text = currentUser.roomname
         holder.content!!.text = currentUser.lastMessage
         holder.time!!.text = currentUser.timeStamp
-        if(imgUrl != null) {
-            val imgUri = Uri.parse(imgUrl)
-            Glide.with(context)
-                .load(imgUri)
-                .into(holder.profile!!)
-        } else {
-            holder.profile!!.setImageResource(R.drawable.shape_circle_profile)
-        }
+//        if(imgUrl != null) {
+//            val imgUri = Uri.parse(imgUrl)
+//            Glide.with(context)
+//                .load(imgUri)
+//                .into(holder.profile!!)
+//        } else {
+//            holder.profile!!.setImageResource(R.drawable.img_profile)
+//        }
 
         holder.itemView.setOnClickListener{
             val intent = Intent(context, ChatroomActivity::class.java)

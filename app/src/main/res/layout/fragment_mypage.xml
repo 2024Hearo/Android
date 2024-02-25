@@ -40,7 +40,7 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/ic_user_profile_shape"
             android:padding="2dp"
-            android:src="@drawable/ic_user_profile_shape"/>
+            android:src="@drawable/profile" />
 
         <!-- User Email TextView -->
         <TextView
@@ -57,54 +57,33 @@
 
 
     <!-- SOUND Section -->
+    <TextView
+        android:id="@+id/tv_home_soundTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="Emergancy Voice"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@id/topImageLayout"
+        android:layout_marginTop="24dp"/>
+
+    <!-- SOUND Section -->
     <LinearLayout
         android:id="@+id/soundSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@id/topImageLayout"
-        android:layout_marginTop="20dp">
-
-        <RelativeLayout
-            android:id="@+id/SoundSection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/soundSection"
-            android:layout_marginTop="20dp">
-
-
-        <!-- SOUND Title -->
-        <TextView
-            android:id="@+id/soundTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="SOUND"
-            android:textStyle="bold"/>
-
-            <ImageView
-                android:id="@+id/ic_plus_sound"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/plus"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="280dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-        </RelativeLayout>
+        android:layout_below="@id/tv_home_soundTitle"
+        android:layout_marginTop="10dp"
+        android:paddingVertical="10dp">
 
         <!-- Three white boxes under SOUND -->
         <LinearLayout
             android:id="@+id/soundBoxes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="-10dp"
-            android:layout_marginTop="10dp">
+            android:orientation="horizontal">
 
             <!-- First Box -->
             <LinearLayout
@@ -112,22 +91,22 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
+                android:background="@drawable/shape_roundbox_20"
+                android:elevation="2dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="10dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_emergancy" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="Help me" />
             </LinearLayout>
 
@@ -137,13 +116,14 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
+                android:background="@drawable/shape_roundbox_20"
+                android:elevation="2dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 >
 
                 <ImageView
@@ -154,6 +134,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="wait please" />
             </LinearLayout>
 
@@ -163,13 +144,13 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
+                android:background="@drawable/shape_roundbox_20"
+                android:elevation="2dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+                android:layout_marginLeft="10dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -179,6 +160,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="I can't hear" />
             </LinearLayout>
         </LinearLayout>
