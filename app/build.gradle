@@ -2,7 +2,13 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id("com.google.gms.google-services")
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+   // id "com.chaquo.python"
 }
+//apply plugin: 'com.chaquo.python'
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
     compileSdk 34
@@ -15,6 +21,23 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        ndk {
+//            abiFilters "armeabi-v7a" //, "arm64-v8a", "x86", "x86_64"
+//        }
+//        python {
+//            version "3.8"
+//            pip{
+//                install "numpy"
+//                install "mediapipe"
+//
+//            }
+//        }
+//        sourceSets {
+//            getByName("main") {
+//                python.srcDir "src/main/python"
+//            }
+//        }
+        buildConfigField "String", "API_KEY", properties['api_key']
     }
 
     viewBinding {
@@ -23,7 +46,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -35,6 +58,7 @@ android {
         jvmTarget = '1.8'
     }
 }
+project.ext.ASSET_DIR = projectDir.toString() + '/src/main/assets'
 
 dependencies {
 
@@ -61,12 +85,21 @@ dependencies {
     //Firebase
     implementation platform("com.google.firebase:firebase-bom:32.3.1")
     implementation 'com.google.firebase:firebase-database-ktx'
+    implementation 'com.google.firebase:firebase-storage-ktx'
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
     //glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+    implementation("com.google.ai.client.generativeai:generativeai:0.1.2")
+
+//    implementation 'com.google.mediapipe:tasks-vision:0.10.0'
+//    implementation 'com.google.mediapipe:tasks-vision:latest.release'
+
 
 //    //Coroutine
 //    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.3"

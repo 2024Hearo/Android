@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
-import com.google.android.play.integrity.internal.t
 import com.hearos.hearo.databinding.ActivityRegisterBinding
 import com.hearos.hearo.utils.FirebaseAuthUtils
+import com.hearos.hearo.utils.FirebaseRef
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -49,12 +49,21 @@ class RegisterActivity : AppCompatActivity() {
             if (task.isSuccessful){
                 Toast.makeText(this,"회원가입에 성공했습니다!",Toast.LENGTH_SHORT).show()
                 val intent = Intent(this,LoginActivity::class.java)
-                intent.putExtra("nickName", nickName)
+                saveUser(email,nickName)
                 startActivity(intent)
             } else{
                 Toast.makeText(this,"이미 존재하는 계정이거나, 회원가입에 실패했습니다.",Toast.LENGTH_SHORT).show()
             }
         }
 
+    }
+    private fun saveUser(email: String, nickName: String) {
+        val userId = FirebaseAuthUtils.getAuth().currentUser?.uid.orEmpty()
+        val currentDB = FirebaseRef.userInfo.child(userId)
+        val userInfoMap = mutableMapOf<String,Any>()
+        userInfoMap["userId"] = userId
+        userInfoMap["name"] = nickName
+        userInfoMap["email"] = email
+        currentDB.updateChildren(userInfoMap)
     }
 }

@@ -35,6 +35,7 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- BODY Section -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_home_body"
         android:layout_width="match_parent"
@@ -57,15 +58,16 @@
                 android:id="@+id/iv_home_profile"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/shape_circle_profile"
+                android:src="@drawable/profile"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
             <TextView
                 android:id="@+id/tv_home_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hi, 수정\nHow was your day today?"
+                android:text="Hi, User\nHow was your day today?"
                 android:textSize="14sp"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@id/iv_home_profile"
                 app:layout_constraintTop_toTopOf="@id/iv_home_profile"
                 app:layout_constraintBottom_toBottomOf="@id/iv_home_profile"
@@ -84,6 +86,8 @@
             android:id="@+id/btn_home_newchat"
             android:layout_width="0dp"
             android:layout_height="212dp"
+            android:background="@drawable/shape_roundbox_10"
+            android:backgroundTint="@color/white"
             app:layout_constraintTop_toBottomOf="@id/cl_home_introbox"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_home_aichat"
@@ -96,6 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Create"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -105,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="NEW CHAT"
-                android:textStyle="bold"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_home_create"
                 app:layout_constraintStart_toStartOf="parent"
@@ -134,6 +139,8 @@
             android:id="@+id/btn_home_aichat"
             android:layout_width="0dp"
             android:layout_height="212dp"
+            android:background="@drawable/shape_roundbox_10"
+            android:backgroundTint="@color/white"
             app:layout_constraintTop_toBottomOf="@id/cl_home_introbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_home_newchat"
@@ -145,6 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Create"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -154,7 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="HEAROBOT"
-                android:textStyle="bold"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_home_create2"
                 app:layout_constraintStart_toStartOf="parent"
@@ -180,7 +188,118 @@
                 app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!-- SOUND Section -->
+        <TextView
+            android:id="@+id/tv_home_soundTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Emergancy Voice"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/btn_home_newchat"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="24dp"/>
 
+        <!-- SOUND Section -->
+        <LinearLayout
+            android:id="@+id/soundSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_soundTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp"
+            android:paddingVertical="10dp">
+
+            <!-- Three white boxes under SOUND -->
+            <LinearLayout
+                android:id="@+id/soundBoxes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- First Box -->
+                <LinearLayout
+                    android:id="@+id/btn_emerancy"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_roundbox_20"
+                    android:elevation="2dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginRight="10dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_emergancy" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="Help me" />
+                </LinearLayout>
+
+                <!-- Second Box -->
+                <LinearLayout
+                    android:id="@+id/btn_wait"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_roundbox_20"
+                    android:elevation="2dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_wait" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="wait please" />
+                </LinearLayout>
+
+                <!-- Third Box -->
+                <LinearLayout
+                    android:id="@+id/btn_hear"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_roundbox_20"
+                    android:elevation="2dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_hear" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="I can't hear" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
