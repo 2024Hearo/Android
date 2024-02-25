@@ -8,8 +8,8 @@
         android:id="@+id/iv_chatlist_profile"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:background="@drawable/shape_circle_profile"
-        android:src="@drawable/cat"
+
+        android:src="@drawable/img_profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="8dp" />
