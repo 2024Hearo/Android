@@ -56,7 +56,7 @@ class VoiceActivity3 : AppCompatActivity() {
         btnShow.setOnClickListener {
             // 로딩 다이얼로그 생성 및 표시
             val loadingDialog = ProgressDialog(this@VoiceActivity3).apply {
-                setMessage("생성중..")
+                setMessage("Generating.. it may take time.")
                 setCancelable(false) // 다이얼로그 바깥 영역 터치해도 닫히지 않게 설정
                 show()
             }
