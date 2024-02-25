@@ -28,7 +28,7 @@ class ChatinviteActivity: AppCompatActivity() {
             finish()
         }
         binding.btnInvitechatInvite.setOnClickListener {
-            //sendEmail()
+            sendEmail()
             finish()
         }
     }
@@ -45,11 +45,9 @@ class ChatinviteActivity: AppCompatActivity() {
                 Log.d("CHATINVITEACT", response.toString())
                 if (response.success) {
                     Log.d("CHATINVITEACT", "초대 성공 + ${response}")
-                    Toast.makeText(this@ChatinviteActivity,"초대 성공",Toast.LENGTH_SHORT).show()
                     finish()
                 } else {
                     Log.d("CHATINVITEACT", "실패 + ${response}")
-                    Toast.makeText(this@ChatinviteActivity, "초대 실패",Toast.LENGTH_SHORT).show()
                 }
             }
         }?.addOnFailureListener { exception ->

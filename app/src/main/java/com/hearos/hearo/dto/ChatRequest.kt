@@ -26,8 +26,3 @@ data class ChatRejectRequest(
     @SerializedName(value = "userId")
     val friendUid: String,
 )
-
-data class ChatRoomRequest(
-    @SerializedName(value = "message")
-    val message: String?,
-)

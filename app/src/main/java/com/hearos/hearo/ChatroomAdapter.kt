@@ -2,12 +2,14 @@ package com.hearos.hearo
 
 import android.content.Context
 import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.MediaController
 import android.widget.TextView
+import android.widget.VideoView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -20,7 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ChatroomAdapter(val context: Context, val messageList: MutableList<MessageModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
+    private var currentVideoIndex = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
             MessageModel.VIEW_TYPE_ME -> {
@@ -65,26 +67,9 @@ class ChatroomAdapter(val context: Context, val messageList: MutableList<Message
                     video.setOnPreparedListener {
                         video.start()
                     }
+
                     holder.recieveImage.visibility = View.VISIBLE
 
-//                    CoroutineScope(Dispatchers.IO).launch {
-//                        val response = getSign(holder.receiveMessage.toString())
-//                        if (response.isNotEmpty()) {
-//                            Log.d("TEXTTOSIGN", response)
-//                            val video = holder.recieveImage
-//                            val video_uri = Uri.parse(response)
-//                            video.setVideoURI(video_uri)
-//                            video.setMediaController(MediaController(context))
-//                            video.requestFocus()
-//
-//                            video.setOnPreparedListener {
-//                                video.start()
-//                            }
-//                            holder.recieveImage.visibility = View.VISIBLE
-//                        } else {
-//                            Log.d("TEXTTOSIGN", "실패 + ${response}")
-//                        }
-//                    }
                 }
             }
         }
@@ -112,7 +97,7 @@ class ChatroomAdapter(val context: Context, val messageList: MutableList<Message
         val recieveImage = binding.ivMessageHandsign
     }
 
-    private suspend fun getSign(message: String) : String {
+    private suspend fun getSign(message: String) : SoundRes {
         return RetrofitService.chatApi.getSign(message)
     }
 }

@@ -1,5 +1,7 @@
 package com.hearos.hearo
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.OnBackPressedCallback
@@ -26,6 +28,7 @@ class ChatroomActivity : AppCompatActivity() {
     val messageList = mutableListOf<MessageModel>()
     lateinit var chatroomAdapter : ChatroomAdapter
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChatroomBinding.inflate(layoutInflater)
@@ -33,7 +36,6 @@ class ChatroomActivity : AppCompatActivity() {
 
         binding.tvChatroomTitle.text = intent.getStringExtra("roomName")
         val chatRoomId = intent.getStringExtra("roomId")
-
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         binding.btnChatroomBack.setOnClickListener {
@@ -44,7 +46,9 @@ class ChatroomActivity : AppCompatActivity() {
             sendMessage(chatRoomId!!)
         }
         binding.btnChatroomCamera.setOnClickListener {
-
+            val intent = Intent(this, SignActivity::class.java)
+            intent.putExtra("roomId", chatRoomId)
+            startActivity(intent)
         }
 
         chatroomAdapter = ChatroomAdapter(this, messageList)
@@ -53,6 +57,8 @@ class ChatroomActivity : AppCompatActivity() {
         getMessageList(chatRoomId!!)
 
     }
+
+
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             setLastMessage(intent.getStringExtra("roomId")!!)
@@ -88,7 +94,6 @@ class ChatroomActivity : AppCompatActivity() {
                 Log.w("CHATROOM", "onCancelled", databaseError.toException())
             }
         }
-        FirebaseRef.chatRoom.child(roomId).child("Message").addValueEventListener(postListener)
         FirebaseRef.chatRoom.child(roomId).child("Message").addValueEventListener(postListener)
     }
 

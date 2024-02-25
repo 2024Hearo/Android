@@ -20,6 +20,6 @@ interface ChatInterface {
                           @Query("userid") userId: String): HomeRes
 
     @GET("/video/play/{filename}")
-    suspend fun getSign(@Path("filename") filename: String): String
+    suspend fun getSign(@Path("filename") filename: String): SoundRes
 
 }

@@ -1,5 +1,6 @@
 package com.hearos.hearo
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -43,26 +44,33 @@ class AiChatFragment : Fragment() {
         binding.rvChatroom.adapter = chatroomAdapter
         getMessageList()
 
+        binding.btnChatroomCamera.setOnClickListener {
+            Log.d("CHAT", "btn")
+            startActivity(Intent(context, SignActivity::class.java))
+        }
         binding.btnChatroomSend.setOnClickListener {
+
             CoroutineScope(Dispatchers.IO).launch {
 
                 val generativeModel = GenerativeModel(
                     modelName = "gemini-pro",
                     apiKey = BuildConfig.API_KEY
                 )
-                val prompt = binding.etChatroomInput.text.toString()
+                val message = binding.etChatroomInput.text.toString()
+                val prompt = "글을 잘 모르는 사람과 대화하고 있다고 가정해. 답변은 한문장으로 간결하게 대답해줘." + message
                 val sendTime = getSendTime()
                 val nickName = HearoApplication.dataStore.dsName
-                val messageModel = MessageModel(HearoApplication.dataStore.dsUid!!, nickName, prompt, sendTime)
+                val messageModel = MessageModel(HearoApplication.dataStore.dsUid!!, nickName, message, sendTime)
                 FirebaseRef.userInfo.child(HearoApplication.dataStore.dsUid!!).child("GEMINI").push().setValue(messageModel)
                 binding.etChatroomInput.setText(null)
 
                 val response = generativeModel.generateContent(prompt).text
                 val aiMessageModel = MessageModel("ai", "Hearobot", response!!, getSendTime())
                 FirebaseRef.userInfo.child(HearoApplication.dataStore.dsUid!!).child("GEMINI").push().setValue(aiMessageModel)
-                Log.d("AI", prompt + response)
+//                Log.d("AI", prompt + response)
             }
         }
+
 
         return binding.root
     }

@@ -45,27 +45,26 @@ class LoginActivity : AppCompatActivity() {
         if (userId != "") {
             startActivity(Intent(this, MainActivity::class.java))
         }
-        // 로그인 세션 초기화
-        FirebaseAuth.getInstance().signOut()
+//        // 로그인 세션 초기화
+//        FirebaseAuth.getInstance().signOut()
+//
+//        // GoogleSignInOptions 구성
+//        val defaultWebClientId = resources.getString(
+//            resources.getIdentifier("default_web_client_id", "string", packageName)
+//        )
+//
+//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//            .requestIdToken(defaultWebClientId)
+//            .requestEmail()
+//            .build()
+//
+//        // GoogleSignInClient 초기화
+//        googleSignInClient = GoogleSignIn.getClient(this, gso)
+//
+//        // Google 로그인 버튼 참조 및 클릭 리스너 설정
+//        findViewById<Button>(R.id.btn_login_google).setOnClickListener { signIn() }
 
-        // GoogleSignInOptions 구성
-        val defaultWebClientId = resources.getString(
-            resources.getIdentifier("default_web_client_id", "string", packageName)
-        )
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(defaultWebClientId)
-            .requestEmail()
-            .build()
-
-        // GoogleSignInClient 초기화
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-
-        // Google 로그인 버튼 참조 및 클릭 리스너 설정
-        findViewById<Button>(R.id.btn_login_google).setOnClickListener { signIn() }
-
-
-        //test code
         findViewById<Button>(R.id.btn_login_kakao).setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }

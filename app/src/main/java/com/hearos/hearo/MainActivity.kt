@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                     AiChatFragment().changeFragment()
                 }
                 R.id.bnvitem_mypage -> {
-                    ChatFragment().changeFragment()
+                    MypageFragment().changeFragment()
                 }
             }
             return@setOnItemSelectedListener true
