@@ -20,13 +20,14 @@ import com.hearos.hearo.utils.RetrofitService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class MypageFragment : Fragment() {
 
     private lateinit var mediaPlayer: MediaPlayer
 
-    private suspend fun PlaySound(filename:String) : SoundRes {
+    private suspend fun PlaySound(filename:String) : String {
         return RetrofitService.MypageApi.getAudioFileUrl(filename = filename )
     }
 
@@ -84,8 +85,7 @@ class MypageFragment : Fragment() {
 
     //소리
     private fun playSound(fileName: String) {
-        // 로딩 다이얼로그 시작
-        val progressDialog = ProgressDialog(context).apply {
+        val progressDialog = ProgressDialog(requireContext()).apply {
             setMessage("Loading...")
             isIndeterminate = true
             setCancelable(false)
@@ -94,16 +94,21 @@ class MypageFragment : Fragment() {
 
         Log.d("MypageFragment", "playSound called with fileName: $fileName")
 
-       // CoroutineScope(Dispatchers.IO).launch {
-            //val response = PlaySound(fileName)
-            //Log.d("sound", response.toString())
-            //if (response.url.isNotEmpty()) {
-                //playAudioFromUrl(response.url)
-                //Log.d("sound", "초대 성공 + ${response}")
-            //} else {
-           //     Log.d("sound", "실패 + ${response}")
-           // }
-       // }
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val url = withContext(Dispatchers.IO) { PlaySound(fileName) }
+                if (url.isNotEmpty()) {
+                    playAudioFromUrl(url)
+                    Log.d("MypageFragment", "Playing sound from URL: $url")
+                } else {
+                    Log.d("MypageFragment", "URL is empty")
+                }
+            } catch (e: Exception) {
+                Log.e("MypageFragment", "Error fetching audio file: ${e.localizedMessage}")
+            } finally {
+                progressDialog.dismiss()
+            }
+        }
     }
 
     private fun playAudioFromUrl(url: String) {
@@ -120,10 +125,11 @@ class MypageFragment : Fragment() {
             prepareAsync() // 비동기 준비
             setOnPreparedListener { start() } // 준비가 되면 시작
             setOnCompletionListener {
-                Toast.makeText(context, "재생 완료", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "재생 완료", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

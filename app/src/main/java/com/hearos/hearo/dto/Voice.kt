@@ -9,5 +9,5 @@ data class ResponseBody(
 )
 
 data class SoundRes(
-    @SerializedName("text") val url: String,
+    val url: String
 )

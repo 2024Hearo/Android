@@ -12,6 +12,6 @@ data class InvitedRes(
     @SerializedName("success") val success: Boolean,
 )
 
-data class SoundRes(
-    @SerializedName("text") val url: String,
-)
+//data class SoundRes(
+    //@SerializedName("text") val url: String,
+//)

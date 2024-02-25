@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.ai.client.generativeai.GenerativeModel
+//import com.google.ai.client.generativeai.GenerativeModel
 
 
 import com.google.firebase.database.DataSnapshot
@@ -52,10 +52,10 @@ class AiChatFragment : Fragment() {
 
             CoroutineScope(Dispatchers.IO).launch {
 
-                val generativeModel = GenerativeModel(
-                    modelName = "gemini-pro",
-                    apiKey = BuildConfig.API_KEY
-                )
+                //val generativeModel = GenerativeModel(
+                    //modelName = "gemini-pro",
+                    //apiKey = BuildConfig.API_KEY
+                //)
                 val message = binding.etChatroomInput.text.toString()
                 val prompt = "글을 잘 모르는 사람과 대화하고 있다고 가정해. 답변은 한문장으로 간결하게 대답해줘." + message
                 val sendTime = getSendTime()
@@ -64,9 +64,9 @@ class AiChatFragment : Fragment() {
                 FirebaseRef.userInfo.child(HearoApplication.dataStore.dsUid!!).child("GEMINI").push().setValue(messageModel)
                 binding.etChatroomInput.setText(null)
 
-                val response = generativeModel.generateContent(prompt).text
-                val aiMessageModel = MessageModel("ai", "Hearobot", response!!, getSendTime())
-                FirebaseRef.userInfo.child(HearoApplication.dataStore.dsUid!!).child("GEMINI").push().setValue(aiMessageModel)
+               // val response = generativeModel.generateContent(prompt).text
+              //  val aiMessageModel = MessageModel("ai", "Hearobot", response!!, getSendTime())
+               // FirebaseRef.userInfo.child(HearoApplication.dataStore.dsUid!!).child("GEMINI").push().setValue(aiMessageModel)
 //                Log.d("AI", prompt + response)
             }
         }

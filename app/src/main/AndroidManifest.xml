@@ -48,7 +48,6 @@
 
         <activity android:name=".VoiceActivity2"/>
         <activity android:name=".VoiceActivity3"/>
-        <activity android:name=".SplashActivity"/>
         <activity android:name=".SignActivity"/>
 
     </application>

@@ -78,6 +78,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun login() {
         Log.d("LoginActivity", "로그인 시작") // 로그 추가
+        progressBar.visibility = View.VISIBLE
         val email = findViewById<EditText>(R.id.edt_login_username).text.toString()
         val password = findViewById<EditText>(R.id.edt_login_password).text.toString()
 
@@ -97,6 +98,7 @@ class LoginActivity : AppCompatActivity() {
 
         FirebaseAuthUtils.getAuth().signInWithEmailAndPassword(email,password).addOnCompleteListener {
                 task ->
+            progressBar.visibility = View.GONE
             if(task.isSuccessful) {
                 Toast.makeText(this,"로그인에 성공했습니다!",Toast.LENGTH_SHORT).show()
                 FirebaseRef.userInfo.child(FirebaseAuthUtils.getUid()).child("name").get().addOnCompleteListener {
@@ -164,6 +166,7 @@ class LoginActivity : AppCompatActivity() {
     // Google 로그인 함수 수정
     private fun firebaseAuthWithGoogle(idToken: String) {
         Log.d("LoginActivity", "Google 로그인 시도: ID Token: $idToken") // 로그 추가
+        progressBar.visibility = View.VISIBLE
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         FirebaseAuth.getInstance().signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
