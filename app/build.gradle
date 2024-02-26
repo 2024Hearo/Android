@@ -37,7 +37,7 @@ android {
 //                python.srcDir "src/main/python"
 //            }
 //        }
-        //buildConfigField "String", "API_KEY", properties['api_key']
+        buildConfigField "String", "API_KEY", properties['api_key']
     }
 
     viewBinding {
