@@ -47,7 +47,6 @@
         </activity>
         <activity android:name=".VoiceActivity2"/>
         <activity android:name=".VoiceActivity3"/>
-
     </application>
 
 </manifest>

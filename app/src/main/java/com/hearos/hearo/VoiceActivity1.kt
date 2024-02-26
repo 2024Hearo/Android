@@ -11,8 +11,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import java.io.IOException
 import android.Manifest
+import android.app.ProgressDialog
 import android.net.Uri
 import android.widget.Toast
+import com.google.firebase.storage.FirebaseStorage
 import com.hearos.hearo.api.MyVoiceInterface
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -53,6 +55,41 @@ class VoiceActivity1 : AppCompatActivity() {
                 startRecording()
             }
         }
+
+        val uploadButton: Button = findViewById(R.id.btn_upload)
+        uploadButton.setOnClickListener {
+            val fileUri: Uri = Uri.fromFile(File("${getExternalFilesDir(null)}/voice/voice.mp3"))
+            val storage = FirebaseStorage.getInstance()
+            val storageRef = storage.getReferenceFromUrl("gs://hearos-414916.appspot.com")
+
+            // 경로를 'voice/voice.mp3'로 업데이트
+            val fileRef = storageRef.child("voice/voice.mp3")
+
+            // 로딩 다이얼로그 생성 및 표시
+            val loadingDialog = ProgressDialog(this).apply {
+                setMessage("업로드 중..")
+                setCancelable(false) // 다이얼로그 바깥 영역 터치해도 닫히지 않게 설정
+                show()
+            }
+
+            // 파일 업로드
+            val uploadTask = fileRef.putFile(fileUri)
+            uploadTask.addOnSuccessListener { taskSnapshot ->
+                // 업로드 성공 시 처리, 로딩 다이얼로그 닫기
+                loadingDialog.dismiss()
+                Log.d("Upload", "Upload Success")
+                Toast.makeText(this, "업로드 성공!", Toast.LENGTH_SHORT).show()
+                // 여기서 필요한 경우 업로드된 파일의 URL을 얻을 수 있습니다.
+            }.addOnFailureListener { exception ->
+                // 업로드 실패 시 처리, 로딩 다이얼로그 닫기
+                loadingDialog.dismiss()
+                Log.d("Upload", "Upload Failed", exception)
+                Toast.makeText(this, "업로드 실패: ${exception.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+
     }
 
     private fun startRecording() {
