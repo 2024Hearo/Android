@@ -96,8 +96,4 @@ class ChatroomAdapter(val context: Context, val messageList: MutableList<Message
         val tranform : AppCompatButton = binding.btnMessageTransform
         val recieveImage = binding.ivMessageHandsign
     }
-
-    private suspend fun getSign(message: String) : SoundRes {
-        return RetrofitService.chatApi.getSign(message)
-    }
 }

@@ -28,16 +28,11 @@ class ChatFragment : Fragment() {
     ): View? {
         binding = FragmentChatBinding.inflate(inflater, container, false)
 
-//        binding.btnChatCreate.setOnClickListener {
-//            startActivity(Intent(context, ChatinviteActivity::class.java))
-//        }
-//
-//        initList()
-       // binding.btnChatCreate.setOnClickListener {
-            //val PATH = "android.resource://com.hearos.hearo/" + R.raw.sound1
-            //val url = Uri.parse(PATH)
+        binding.btnChatCreate.setOnClickListener {
+            startActivity(Intent(context, ChatinviteActivity::class.java))
+        }
 
-        //}
+        initList()
 
         return binding.root
     }
